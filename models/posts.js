@@ -1,4 +1,4 @@
-import { model, Schema, Types } from "mongoose";
+import { model, Schema, Types, models } from "mongoose";
 
 const dataPost = new Schema({
   title: {
@@ -21,6 +21,6 @@ const dataPost = new Schema({
   },
 });
 
-const DataPost = model("Posty", dataPost);
+const Post = models.Post||model("Post", dataPost);
 
-module.exports=DataPost;
+export default Post;
