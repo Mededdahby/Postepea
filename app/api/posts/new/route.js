@@ -3,20 +3,26 @@ import Post from "@models/posts";
 import mongoose from "mongoose";
 
 export const POST = async (request) => {
-  const { type, title, text } = await request.json();
-
   try {
     await connectToDB();
-    const newPrompt = new Post({
+
+    const { type, title, text } = await request.json();
+    const userID = new mongoose.Types.ObjectId("65c40331ea9275e9595fb13f");
+
+    const newPost = {
       type,
       title,
       text,
-      userID: mongoose.Types.ObjectId("65c40397ea9275e9595fb142"),
-    });
+      userID,
+    };
 
-    await newPrompt.save();
-    return new Response("done", { status: 201 });
+    console.log("New Post:", newPost);
+
+    await Post.create(newPost);
+
+    return new Response("Post created successfully", { status: 200 });
   } catch (error) {
+    console.error("Error creating a new post:", error);
     return new Response("Failed to create a new post", { status: 500 });
   }
 };

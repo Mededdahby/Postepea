@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import { NextRequest, NextResponse } from "next/server";
 
 const YourFormComponent = () => {
   const [formData, setFormData] = useState({
@@ -18,55 +17,44 @@ const YourFormComponent = () => {
     });
   };
 
-  // const fetchData = async () => {
-  //   try {
-  //     const res = await fetch("/api/posts/new");
-  //     const data = await res.json();
-  //   } catch (error) {
-  //     console.error("Error fetching data:", error);
-  //   }
+  const handleSelectChange = (e) => {
+    const { value } = e.target;
+    setFormData({
+      ...formData,
+      type: value,
+    });
+  };
 
-    const handleSelectChange = (e) => {
-      const { value } = e.target;
-      setFormData({
-        ...formData,
-        type: value,
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch("/api/posts/new", {
+        method: "POST",
+        body: JSON.stringify({
+          type: formData.type,
+          title: formData.title,
+          text: formData.text,
+        }),
       });
-    };
 
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-    
-      try {
-        const response = await fetch("/api/posts/new", {
-          method: "POST",
-          body: JSON.stringify({
-            type: formData.type,
-            title: formData.title,
-            text: formData.text,
-          }),
-        });
-    
-        if (response.ok) {
-          const data = await response.json();
-          console.log("Post created successfully:", data);
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Post created successfully:", data);
+      } else {
+        const contentType = response.headers.get("Content-Type") || "";
+        if (contentType.includes("application/json")) {
+          const errorData = await response.text();
+          console.error("Failed to create post. Server error:", errorData);
         } else {
-          const contentType = response.headers.get("Content-Type") || "";
-          if (contentType.includes("application/json")) {
-            // Try to parse the error data if the content type is JSON
-            const errorData = await response.json();
-            console.error("Failed to create post. Server error:", errorData);
-          } else {
-            // If not JSON, log the entire response text
-            const errorText = await response.text();
-            console.error("Failed to create post. Server response:", errorText);
-          }
+          const errorText = await response.text();
+          console.error("Failed to create post. Server response:", errorText);
         }
-      } catch (error) {
-        console.error("Error:", error);
       }
-    };
-    
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
   return (
     <form

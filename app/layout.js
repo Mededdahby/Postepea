@@ -1,5 +1,6 @@
 import "@styles/globals.css";
 import Nav from "@components/Nav";
+
 export const metadata = {
   title: "Postepea",
   description: "Discover new world of posts and aticls",

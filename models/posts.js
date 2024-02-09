@@ -7,7 +7,7 @@ const dataPost = new Schema({
   },
   type: {
     type: String,
-    enum: ["post", "article"],
+    enum: ["Post", "Article"],
     required: true,
   },
   text: {
@@ -21,6 +21,6 @@ const dataPost = new Schema({
   },
 });
 
-const Post = models.Post||model("Post", dataPost);
+const Post = models.Post || model("Post", dataPost);
 
 export default Post;

@@ -18,7 +18,7 @@ const Page = () => {
     };
 
     fetchData();
-  }, []); // The empty dependency array ensures the effect runs only once
+  }, []);
 
   return (
     <div>
