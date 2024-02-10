@@ -20,9 +20,13 @@ export const POST = async (request) => {
 
     await Post.create(newPost);
 
-    return new Response("Post created successfully", { status: 200 });
+    return new Response(
+      JSON.stringify("Post created successfully", { status: 200 })
+    );
   } catch (error) {
     console.error("Error creating a new post:", error);
-    return new Response("Failed to create a new post", { status: 500 });
+    return new Response(
+      JSON.stringify("Failed to create a new post", { status: 500 })
+    );
   }
 };

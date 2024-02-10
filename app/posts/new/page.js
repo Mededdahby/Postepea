@@ -1,7 +1,10 @@
 "use client";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const YourFormComponent = () => {
+  const router = useRouter();
+
   const [formData, setFormData] = useState({
     title: "",
     type: "Post",
@@ -40,16 +43,11 @@ const YourFormComponent = () => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log("Post created successfully:", data);
+        router.push("/");
+        // console.log("Post created successfully:", data);
       } else {
-        const contentType = response.headers.get("Content-Type") || "";
-        if (contentType.includes("application/json")) {
-          const errorData = await response.text();
-          console.error("Failed to create post. Server error:", errorData);
-        } else {
-          const errorText = await response.text();
-          console.error("Failed to create post. Server response:", errorText);
-        }
+        const errorData = await response.json();
+        console.error("Failed to create post. Server error:", errorData);
       }
     } catch (error) {
       console.error("Error:", error);

@@ -15,7 +15,7 @@ const page = async ({ params }) => {
     };
 
     fetchData();
-  }, []);
+  }, [params.id]);
 
   return (
     <div className="prompt_layout flex-center">
