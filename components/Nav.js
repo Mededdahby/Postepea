@@ -7,6 +7,7 @@ import Link from "next/link";
 
 const Nav = () => {
   const [isLgged, setIsLogget] = useState(true);
+  const [taggel, setTaggel] = useState(false);
   const handleLogin = () => {
     setIsLogget(true);
   };
@@ -51,6 +52,47 @@ const Nav = () => {
                 className="rounded-full"
               />
             </Link>
+          </div>
+        ) : (
+          <>
+            <button
+              type="button"
+              className="outline_btn"
+              onClick={() => handleLogout}
+            >
+              signIn
+            </button>
+          </>
+        )}
+      </div>
+
+      {/* Phone navigation */}
+      <div className="sm:hidden flex relative">
+        {isLgged ? (
+          <div className="flex gap-3 md:gap-5">
+            <Image
+              src="/assets/images/profile.png"
+              alt="logo"
+              width={37}
+              height={37}
+              className="rounded-full"
+              onClick={() => setTaggel(!taggel)}
+            />
+
+            {taggel && (
+              <div className="dropdown">
+                <Link href="/posts/new" className="black_btn">
+                  New Posts
+                </Link>
+                <button
+                  type="button"
+                  className="outline_btn"
+                  onClick={() => setTaggel(!taggel)}
+                >
+                  signOut
+                </button>
+              </div>
+            )}
           </div>
         ) : (
           <>

@@ -21,7 +21,7 @@ const Posts = () => {
   }, []);
 
   return (
-    <div>
+    <div className="">
       <input
         type="text"
         className="search_input"
