@@ -3,17 +3,22 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-// import {signIn , signOut , useSession , getProviders} from 'next-auth/react'
+import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 
 const Nav = () => {
   const [isLgged, setIsLogget] = useState(true);
   const [taggel, setTaggel] = useState(false);
-  const handleLogin = () => {
-    setIsLogget(true);
-  };
-  const handleLogout = () => {
-    setIsLogget(false);
-  };
+  const [providers, setProviders] = useState(null);
+
+  useEffect(() => {
+    const setProvidersFunc = async () => {
+      const response = await getProviders();
+      setProviders(response);
+    };
+
+    setProvidersFunc();
+  }, []);
+
   return (
     <nav className="flex-between w-full mb-16 pt-3">
       <Link href="/" className="flex gap-2 flex-center">
@@ -30,18 +35,18 @@ const Nav = () => {
       <div className="sm:flex hidden">
         {isLgged ? (
           <div className="flex gap-3 md:gap-5">
-            <Link href="/posts" className="flex gap-2 flex-center outline_btn">
+            {/* <Link href="/posts" className="flex gap-2 flex-center outline_btn">
               Posts
-            </Link>
+            </Link> */}
             <Link href="/posts/new" className="black_btn">
               Create New Posts
             </Link>
             <button
               type="button"
               className="outline_btn"
-              onClick={() => handleLogin()}
+              onClick={() => signOut()}
             >
-              signOut
+              Sign Out
             </button>
             <Link href="/" className="flex gap-2 flex-center">
               <Image
@@ -55,13 +60,16 @@ const Nav = () => {
           </div>
         ) : (
           <>
-            <button
-              type="button"
-              className="outline_btn"
-              onClick={() => handleLogout}
-            >
-              signIn
-            </button>
+            {providers &&
+              Object.values(providers).map((provider) => (
+                <button
+                  type="button"
+                  className="outline_btn"
+                  onClick={() => signIn(provider.id)}
+                >
+                  Sign In
+                </button>
+              ))}
           </>
         )}
       </div>
@@ -87,22 +95,27 @@ const Nav = () => {
                 <button
                   type="button"
                   className="outline_btn"
-                  onClick={() => setTaggel(!taggel)}
+                  onClick={() => {setTaggel(!taggel)
+                  signOut()
+                  }}
                 >
-                  signOut
+                  Sign Out
                 </button>
               </div>
             )}
           </div>
         ) : (
           <>
-            <button
-              type="button"
-              className="outline_btn"
-              onClick={() => handleLogout}
-            >
-              signIn
-            </button>
+            {providers &&
+              Object.values(providers).map((provider) => (
+                <button
+                  type="button"
+                  className="outline_btn"
+                  onClick={() => signIn(provider.id)}
+                >
+                  Sign In
+                </button>
+              ))}
           </>
         )}
       </div>
