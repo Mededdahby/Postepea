@@ -1,10 +1,10 @@
 'use client'
 import { SessionProvider } from 'next-auth/react'
 
-const Provider = ({childern, session}) => {
+const Provider = ({children, session}) => {
   return (
     <SessionProvider session={session}>
-        {childern}
+        {children}
     </SessionProvider>
   )
 }

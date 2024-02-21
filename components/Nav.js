@@ -7,6 +7,8 @@ import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 
 const Nav = () => {
   const [isLgged, setIsLogget] = useState(true);
+  const { data: session } = useSession();
+
   const [taggel, setTaggel] = useState(false);
   const [providers, setProviders] = useState(null);
 
@@ -33,11 +35,8 @@ const Nav = () => {
       </Link>
       {/* DiskTop navigation */}
       <div className="sm:flex hidden">
-        {isLgged ? (
+        {session?.user ? (
           <div className="flex gap-3 md:gap-5">
-            {/* <Link href="/posts" className="flex gap-2 flex-center outline_btn">
-              Posts
-            </Link> */}
             <Link href="/posts/new" className="black_btn">
               Create New Posts
             </Link>
@@ -50,7 +49,7 @@ const Nav = () => {
             </button>
             <Link href="/" className="flex gap-2 flex-center">
               <Image
-                src="/assets/images/logo.svg"
+                src={session?.user.image}
                 alt="logo"
                 width={37}
                 height={37}
@@ -73,13 +72,12 @@ const Nav = () => {
           </>
         )}
       </div>
-
       {/* Phone navigation */}
       <div className="sm:hidden flex relative">
-        {isLgged ? (
+        {session?.user  ? (
           <div className="flex gap-3 md:gap-5">
             <Image
-              src="/assets/images/profile.png"
+              src={session?.user.image}
               alt="logo"
               width={37}
               height={37}
