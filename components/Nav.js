@@ -62,6 +62,7 @@ const Nav = () => {
             {providers &&
               Object.values(providers).map((provider) => (
                 <button
+                  key={provider.id}
                   type="button"
                   className="outline_btn"
                   onClick={() => signIn(provider.id)}
@@ -74,7 +75,7 @@ const Nav = () => {
       </div>
       {/* Phone navigation */}
       <div className="sm:hidden flex relative">
-        {session?.user  ? (
+        {session?.user ? (
           <div className="flex gap-3 md:gap-5">
             <Image
               src={session?.user.image}
@@ -93,8 +94,9 @@ const Nav = () => {
                 <button
                   type="button"
                   className="outline_btn"
-                  onClick={() => {setTaggel(!taggel)
-                  signOut()
+                  onClick={() => {
+                    setTaggel(!taggel);
+                    signOut();
                   }}
                 >
                   Sign Out
@@ -107,6 +109,7 @@ const Nav = () => {
             {providers &&
               Object.values(providers).map((provider) => (
                 <button
+                  key={provider.id}
                   type="button"
                   className="outline_btn"
                   onClick={() => signIn(provider.id)}

@@ -1,25 +1,17 @@
 import { connectToDB } from "@utils/ConnectDb";
 import Post from "@models/posts";
-import mongoose from "mongoose";
 
 export const POST = async (request) => {
   try {
     await connectToDB();
-
-    const { type, title, text } = await request.json();
-    const userID = new mongoose.Types.ObjectId("65c40331ea9275e9595fb13f");
-
+    const { type, title, text, userID } = await request.json();
     const newPost = {
       type,
       title,
       text,
       userID,
     };
-
-    console.log("New Post:", newPost);
-
     await Post.create(newPost);
-
     return new Response(
       JSON.stringify("Post created successfully", { status: 200 })
     );

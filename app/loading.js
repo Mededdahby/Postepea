@@ -1,11 +1,10 @@
-
 const Loading = () => {
   return (
-    <div className="flex items-center justify-center h-screen">
+    <div className="flex items-center justify-center">
       <div className="p-4 max-w-sm mx-auto bg-white rounded-md shadow-md">
         <div className="flex items-center space-x-4">
           <svg
-            className="animate-spin h-5 w-5 text-blue-500"
+            className="animate-spin h-3 w-5 text-blue-500"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"

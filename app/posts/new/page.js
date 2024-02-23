@@ -1,15 +1,16 @@
 "use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const YourFormComponent = () => {
   const router = useRouter();
+  const { data: session } = useSession();
 
   const [formData, setFormData] = useState({
     title: "",
     type: "Post",
     text: "",
-    tag: "",
   });
 
   const handleInputChange = (e) => {
@@ -38,13 +39,13 @@ const YourFormComponent = () => {
           type: formData.type,
           title: formData.title,
           text: formData.text,
+          userID: session?.user.id,
         }),
       });
 
       if (response.ok) {
         const data = await response.json();
         router.push("/");
-        // console.log("Post created successfully:", data);
       } else {
         const errorData = await response.json();
         console.error("Failed to create post. Server error:", errorData);
@@ -57,7 +58,7 @@ const YourFormComponent = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="shadow-md rounded px-12 pt-6 pb-4 mb-4"
+      className="shadow-md rounded px-12 pt-6 pb-4 mb-4 w-full max-w-xl"
     >
       <div className="mb-4">
         <label
@@ -100,14 +101,14 @@ const YourFormComponent = () => {
         >
           Text
         </label>
-        <input
+        <textarea
           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline form_textarea"
           id="text"
-          type="text"
           name="text"
           value={formData.text}
           onChange={handleInputChange}
           placeholder="Text"
+          rows="4"
         />
       </div>
       <button type="submit" className="outline_btn">

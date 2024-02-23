@@ -1,6 +1,5 @@
-import Posts from "@components/posts"
+import Posts from "@components/posts";
 const Home = () => {
-
   return (
     <section className="w-full flex-center flex-col">
       <h1 className="head_text text-center ">
@@ -9,11 +8,13 @@ const Home = () => {
         <span className="orange_gradient text-center">Posts & Articls</span>
       </h1>
       <p className="desc text-center">
-        This webiste is an open-source Tool to discover and share Articls &
-        Posts
+        Welcome to Postepea, where every post becomes a masterpiece and every
+        article tells a story  <br /> A platform where your ideas shine, and
+        creativity knows no bounds!✨🌟
       </p>
       <h1 className="head_text text-center blue_gradient my-">Latest</h1>
-<Posts/>
+      <Posts />
+      
     </section>
   );
 };
